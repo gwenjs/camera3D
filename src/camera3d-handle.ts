@@ -29,6 +29,7 @@ import type { Camera3DHandle, Box } from "./types.js";
  * @param id     - The camera entity id.
  * @param engine - The engine instance (for viewport validation and logging).
  * @param log    - A scoped child logger.
+ * @returns A handle exposing high-level 3D camera controls for the entity.
  */
 export function createCamera3DHandle(
   id: EntityId,
@@ -157,6 +158,8 @@ export function createCamera3DHandle(
             syncRotation: 0,
           });
         }
+      } else {
+        engine.removeComponent(id, LookAtTarget);
       }
     },
 
@@ -224,6 +227,11 @@ export function createCamera3DHandle(
     setFov(fov) {
       const cam = engine.getComponent(id, Camera)!;
       engine.addComponent(id, Camera, { ...cam, fov });
+    },
+
+    setZoom(zoom) {
+      const cam = engine.getComponent(id, Camera)!;
+      engine.addComponent(id, Camera, { ...cam, zoom });
     },
   };
 }

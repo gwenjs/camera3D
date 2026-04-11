@@ -28,6 +28,8 @@ import type { Camera3DHandle, Use3DCameraOpts } from "./types.js";
  * The camera entity is destroyed automatically when the enclosing context
  * (actor, scene, or system) is torn down via `onCleanup`.
  *
+ * @param opts - Initial viewport, projection, priority, and position settings.
+ * @returns A `Camera3DHandle` used to control the created camera entity.
  * @throws {CameraViewportNotFoundError} if the viewport is not registered.
  */
 export function use3DCamera(opts: Use3DCameraOpts = {}): Camera3DHandle {

@@ -19,8 +19,9 @@
 import { defineSystem, onBeforeUpdate, useQuery } from "@gwenjs/core/system";
 import { useEngine } from "@gwenjs/core";
 import type { EntityId } from "@gwenjs/core";
-import { Camera } from "@gwenjs/camera-core";
-import { LookAtTarget, OrbitBehavior } from "./components.js";
+import { Camera, CameraPath, cameraPathStore } from "@gwenjs/camera-core";
+import { Vec3 } from "@gwenjs/math";
+import { LookAtTarget, OrbitBehavior } from "./components";
 
 function normalize(x: number, y: number, z: number): [number, number, number] {
   const len = Math.sqrt(x * x + y * y + z * z);
@@ -28,10 +29,18 @@ function normalize(x: number, y: number, z: number): [number, number, number] {
   return [x / len, y / len, z / len];
 }
 
+/**
+ * 3D camera extension system.
+ *
+ * Processes `OrbitBehavior`, `LookAtTarget`, and camera path waypoint look-at transformations
+ * before the main `CameraSystem` runs. Computes rotation and position for orbiting and
+ * look-at cameras each frame.
+ */
 export const Camera3DExtensionSystem = defineSystem("Camera3DExtensionSystem", () => {
   const engine = useEngine();
   const orbitQuery = useQuery([Camera, OrbitBehavior]);
   const lookAtQuery = useQuery([Camera, LookAtTarget]);
+  const pathQuery = useQuery([Camera, CameraPath]);
 
   onBeforeUpdate((dt) => {
     const dtSeconds = dt / 1000;
@@ -107,6 +116,57 @@ export const Camera3DExtensionSystem = defineSystem("Camera3DExtensionSystem", (
         rotY: Math.atan2(nx, nz),
         rotX: -Math.asin(ny),
       });
+    }
+
+    // ── CameraPath — 3D waypoint look-at and fov ─────────────────────────────
+
+    for (const entity of pathQuery) {
+      const id = entity.id;
+      const pathData = cameraPathStore.get(id);
+      if (!pathData) continue;
+
+      const pathComp = engine.getComponent(id, CameraPath)!;
+      const wp = pathData.waypoints[pathComp.index as number];
+      if (!wp) continue;
+
+      // Read current camera state once; update incrementally via spread
+      let cam = engine.getComponent(id, Camera)!;
+
+      // Apply fov interpolation if the waypoint declares one
+      if (wp.fov !== undefined) {
+        cam = { ...cam, fov: wp.fov };
+        engine.addComponent(id, Camera, cam);
+      }
+
+      // Apply look-at if the waypoint declares one
+      if (wp.lookAt !== undefined) {
+        const target = wp.lookAt;
+        let tx: number;
+        let ty: number;
+        let tz: number;
+
+        if (typeof target === "bigint") {
+          const targetCam = engine.getComponent(target, Camera);
+          if (!targetCam) continue;
+          tx = targetCam.x;
+          ty = targetCam.y;
+          tz = targetCam.z;
+        } else {
+          tx = (target as Vec3).x;
+          ty = (target as Vec3).y;
+          tz = (target as Vec3).z;
+        }
+
+        const dx = tx - cam.x;
+        const dy = ty - cam.y;
+        const dz = tz - cam.z;
+        const [nx, ny, nz] = normalize(dx, dy, dz);
+        engine.addComponent(id, Camera, {
+          ...cam,
+          rotY: Math.atan2(nx, nz),
+          rotX: -Math.asin(ny),
+        });
+      }
     }
   });
 });

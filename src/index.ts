@@ -1,6 +1,8 @@
 /**
  * @file Public API for `@gwenjs/camera3d`.
  *
+ * Exports the composable `use3DCamera()`, plugin, and types for 3D camera control.
+ *
  * @example
  * ```ts
  * import { use3DCamera, Camera3DPlugin } from '@gwenjs/camera3d'
@@ -14,4 +16,4 @@ export { Camera3DExtensionSystem } from "./camera3d-extension-system";
 export { LookAtTarget, OrbitBehavior } from "./components";
 export { useOrbit, useFirstPerson } from "./behaviors";
 
-export type { Use3DCameraOpts, Camera3DHandle, Box } from "./types";
+export type { Use3DCameraOpts, Camera3DHandle, Box, Camera3dOptions, Camera3dService } from "./types";

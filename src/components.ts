@@ -19,11 +19,16 @@ import { defineComponent, Types } from "@gwenjs/core";
 export const LookAtTarget = defineComponent({
   name: "LookAtTarget",
   schema: {
-    entityId: Types.u64, // 0n = use fixed position
+    /** Entity ID to track (0n for fixed point). */
+    entityId: Types.u64,
+    /** Fixed X coordinate when entityId is 0n. */
     fixedX: Types.f32,
+    /** Fixed Y coordinate when entityId is 0n. */
     fixedY: Types.f32,
+    /** Fixed Z coordinate when entityId is 0n. */
     fixedZ: Types.f32,
-    syncRotation: Types.u32, // 1 = copy target rotation (first-person)
+    /** 1 to copy target rotation (first-person mode), 0 for look-at only. */
+    syncRotation: Types.u32,
   },
 });
 
@@ -36,13 +41,21 @@ export const LookAtTarget = defineComponent({
 export const OrbitBehavior = defineComponent({
   name: "OrbitBehavior",
   schema: {
+    /** X coordinate of the orbit center point. */
     targetX: Types.f32,
+    /** Y coordinate of the orbit center point. */
     targetY: Types.f32,
+    /** Z coordinate of the orbit center point. */
     targetZ: Types.f32,
+    /** Distance from the target point. */
     radius: Types.f32,
-    speed: Types.f32, // radians per second
-    elevation: Types.f32, // vertical angle in radians
-    autoRotate: Types.u32, // 1 = advance angle each frame
-    angle: Types.f32, // current horizontal angle, managed by the system
+    /** Rotation speed in radians per second. */
+    speed: Types.f32,
+    /** Vertical angle in radians (0 = equator, π/2 = top). */
+    elevation: Types.f32,
+    /** 1 to continuously auto-rotate, 0 to keep current angle. */
+    autoRotate: Types.u32,
+    /** Current horizontal angle, managed by Camera3DExtensionSystem. */
+    angle: Types.f32,
   },
 });

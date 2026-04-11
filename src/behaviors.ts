@@ -15,6 +15,8 @@ import type { Camera3DHandle } from "./types.js";
 /**
  * Configure orbit behaviour on an existing 3D camera handle.
  *
+ * @param handle - Camera handle returned by `use3DCamera()`.
+ * @param opts - Orbit target, radius, angular speed, and elevation settings.
  * @example
  * ```ts
  * const cam = use3DCamera({ viewport: 'main' })
@@ -37,6 +39,9 @@ export function useOrbit(
 /**
  * Configure first-person mode on an existing 3D camera handle.
  *
+ * @param handle - Camera handle returned by `use3DCamera()`.
+ * @param targetId - Entity whose transform and eye position drive the camera.
+ * @param opts - Optional first-person settings such as eye offset.
  * @example
  * ```ts
  * const cam = use3DCamera({ viewport: 'main' })

@@ -102,4 +102,23 @@ describe("createCamera3DHandle", () => {
         handle.activate();
         expect(engine.getComponent(camId, Camera)?.active).toBe(1);
     });
+
+    it("setZoom() updates Camera.zoom", async () => {
+        const { engine, camId, handle } = await setup();
+        handle.setZoom(2);
+        expect(engine.getComponent(camId, Camera)?.zoom).toBeCloseTo(2);
+    })
+
+    it("followThirdPerson() without lookAt removes a pre-existing LookAtTarget", async () => {
+        const { engine, camId, handle } = await setup();
+        const targetId = engine.createEntity();
+        engine.addComponent(targetId, Camera, {
+            active: 1, priority: 0, projectionType: 1,
+            x: 0, y: 0, z: 0, rotX: 0, rotY: 0, rotZ: 0,
+            zoom: 1, fov: 1, near: 0.1, far: 1000,
+        });
+        handle.lookAt({ x: 0, y: 0, z: 0 });
+        handle.followThirdPerson(targetId);
+        expect(engine.hasComponent(camId, LookAtTarget)).toBe(false);
+    });
 });
