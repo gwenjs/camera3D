@@ -23,6 +23,6 @@ export default defineGwenModule<Camera3dOptions>({
 
     kit.addPlugin(Camera3DPlugin(options));
 
-    kit.addAutoImports([{ name: "useCamera3d", from: "@gwenjs/camera3d" }]);
+    kit.addAutoImports([{ name: "use3DCamera", from: "@gwenjs/camera3d" }]);
   },
 });

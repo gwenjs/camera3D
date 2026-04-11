@@ -213,3 +213,10 @@ export interface Camera3dService {
    */
   getCamera3dHandle(opts?: Use3DCameraOpts): Camera3DHandle | null;
 }
+
+// Augment the typed service registry so engine.inject('renderer:camera3d') is fully typed.
+declare module "@gwenjs/core" {
+  interface GwenProvides {
+    "renderer:camera3d": Camera3dService;
+  }
+}
