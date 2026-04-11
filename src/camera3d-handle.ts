@@ -101,18 +101,23 @@ export function createCamera3DHandle(
       cameraViewportMap.set(id, viewportId);
     },
 
-    shake(intensity) {
+    shake(intensity, opts) {
+      const decay = opts?.decay ?? 0.8;
+      const maxAngle = opts?.maxAngle ?? 10;
       const current = engine.getComponent(id, CameraShake);
       if (!current || current.trauma === 0) {
         engine.addComponent(id, CameraShake, {
           trauma: Math.min(1, intensity),
-          decay: 0.8,
-          maxX: 10,
-          maxY: 10,
+          decay,
+          maxX: maxAngle,
+          maxY: maxAngle,
         });
       } else {
         engine.addComponent(id, CameraShake, {
           ...current,
+          decay,
+          maxX: maxAngle,
+          maxY: maxAngle,
           trauma: Math.min(1, current.trauma + intensity),
         });
       }

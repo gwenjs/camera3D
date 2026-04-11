@@ -100,9 +100,11 @@ export interface Camera3DHandle {
   /**
    * Add screen shake trauma.
    *
-   * @param intensity - Trauma amount in the `[0, 1]` range.
+   * @param intensity - Trauma amount in the `[0, 1]` range. Values accumulate up to 1.
+   * @param opts.decay    - Per-frame decay multiplier. @default 0.8
+   * @param opts.maxAngle - Maximum shake angle in degrees applied to both axes. @default 10
    */
-  shake(intensity: number): void;
+  shake(intensity: number, opts?: { decay?: number; maxAngle?: number }): void;
 
   /** Enable rendering of this camera. */
   activate(): void;

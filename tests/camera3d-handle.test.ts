@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { createEngine } from "@gwenjs/core";
 import { getOrCreateCameraManager, getOrCreateViewportManager } from "@gwenjs/renderer-core";
-import { Camera, CameraCorePlugin, cameraViewportMap, cameraPathStore } from "@gwenjs/camera-core";
+import { Camera, CameraShake, cameraViewportMap, cameraPathStore } from "@gwenjs/camera-core";
 import { CameraViewportNotFoundError, CameraEmptyPathError } from "@gwenjs/camera-core";
 import { LookAtTarget, OrbitBehavior } from "../src/components.js";
 import { createCamera3DHandle } from "../src/camera3d-handle.js";
@@ -120,5 +120,40 @@ describe("createCamera3DHandle", () => {
         handle.lookAt({ x: 0, y: 0, z: 0 });
         handle.followThirdPerson(targetId);
         expect(engine.hasComponent(camId, LookAtTarget)).toBe(false);
+    });
+
+    it("shake() uses default decay=0.8 and maxAngle=10", async () => {
+        const { engine, camId, handle } = await setup();
+        handle.shake(0.5);
+        const shake = engine.getComponent(camId, CameraShake);
+        expect(shake?.trauma).toBeCloseTo(0.5);
+        expect(shake?.decay).toBeCloseTo(0.8);
+        expect(shake?.maxX).toBeCloseTo(10);
+        expect(shake?.maxY).toBeCloseTo(10);
+    });
+
+    it("shake() accepts custom decay and maxAngle opts", async () => {
+        const { engine, camId, handle } = await setup();
+        handle.shake(0.6, { decay: 0.4, maxAngle: 20 });
+        const shake = engine.getComponent(camId, CameraShake);
+        expect(shake?.decay).toBeCloseTo(0.4);
+        expect(shake?.maxX).toBeCloseTo(20);
+        expect(shake?.maxY).toBeCloseTo(20);
+    });
+
+    it("shake() accumulates trauma on repeated calls", async () => {
+        const { engine, camId, handle } = await setup();
+        handle.shake(0.4);
+        handle.shake(0.4);
+        const shake = engine.getComponent(camId, CameraShake);
+        expect(shake?.trauma).toBeCloseTo(0.8);
+    });
+
+    it("shake() clamps total trauma at 1", async () => {
+        const { engine, camId, handle } = await setup();
+        handle.shake(0.7);
+        handle.shake(0.7);
+        const shake = engine.getComponent(camId, CameraShake);
+        expect(shake?.trauma).toBeCloseTo(1);
     });
 });
