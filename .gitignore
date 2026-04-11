@@ -1,0 +1,8 @@
+node_modules/
+dist/
+*.local
+.DS_Store
+.idea
+
+docs/superpowers/
+docs/.vitepress/cache/

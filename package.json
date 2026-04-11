@@ -1,0 +1,54 @@
+{
+  "name": "@gwenjs/camera3d",
+  "version": "0.1.0",
+  "description": "Camera3d plugin for GWEN",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gwenjs/camera3D"
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./module": {
+      "types": "./dist/module.d.ts",
+      "import": "./dist/module.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint src",
+    "format": "oxfmt src",
+    "format:check": "oxfmt --check src",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "dependencies": {
+    "@gwenjs/camera-core": "^0.1.2",
+    "@gwenjs/core": "^0.2.2",
+    "@gwenjs/kit": "^0.2.1",
+    "@gwenjs/math": "^0.1.1",
+    "@gwenjs/renderer-core": "^0.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "oxfmt": "latest",
+    "oxlint": "latest",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.8",
+    "vite-plugin-dts": "^4.5.4",
+    "vitepress": "latest",
+    "vitest": "^4.1.4"
+  }
+}
