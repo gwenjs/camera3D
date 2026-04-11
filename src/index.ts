@@ -2,7 +2,7 @@
 import "./augment";
 
 // Plugin factory — for manual registration in plugins: []
-export { Camera3dPlugin } from "./plugin";
+export { Camera3DPlugin } from "./plugin";
 
 // Composables — useCamera3d() for runtime access inside defineActor()
 export { useCamera3d } from "./composables";

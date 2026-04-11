@@ -27,9 +27,7 @@ export default defineConfig({
       external: [
         "@gwenjs/core",
         "@gwenjs/kit",
-        "@gwenjs/math",
-        "@gwenjs/camera-core",
-        "@gwenjs/renderer-core",
+        /^@gwenjs\/.*/
       ],
     },
   },

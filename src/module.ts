@@ -20,9 +20,9 @@ export default defineGwenModule<Camera3dOptions>({
     layers: { main: { order: 0 } },
   },
   async setup(options, kit) {
-    const { Camera3dPlugin } = await import("./plugin");
+    const { Camera3DPlugin } = await import("./plugin");
 
-    kit.addPlugin(Camera3dPlugin(options));
+    kit.addPlugin(Camera3DPlugin(options));
 
     kit.addAutoImports([{ name: "useCamera3d", from: "@gwenjs/camera3d" }]);
 
