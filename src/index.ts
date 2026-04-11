@@ -1,14 +1,17 @@
-// Side-effect: activates typed useService('renderer:camera3d') in manual mode
-import "./augment";
+/**
+ * @file Public API for `@gwenjs/camera3d`.
+ *
+ * @example
+ * ```ts
+ * import { use3DCamera, Camera3DPlugin } from '@gwenjs/camera3d'
+ * ```
+ */
 
-// Plugin factory — for manual registration in plugins: []
+export { use3DCamera } from "./use-3d-camera";
+export { createCamera3DHandle } from "./camera3d-handle";
 export { Camera3DPlugin } from "./plugin";
+export { Camera3DExtensionSystem } from "./camera3d-extension-system";
+export { LookAtTarget, OrbitBehavior } from "./components";
+export { useOrbit, useFirstPerson } from "./behaviors";
 
-// Composables — useCamera3d() for runtime access inside defineActor()
-export { useCamera3d } from "./composables";
-
-// Public types
-export type { Camera3dOptions, Camera3dService } from "./types";
-
-// The build-time module is exposed via the './module' package export.
-// Do NOT re-export it here — that creates a circular dependency.
+export type { Use3DCameraOpts, Camera3DHandle, Box } from "./types";
