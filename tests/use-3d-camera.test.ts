@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { createEngine } from "@gwenjs/core";
+import { createEngine, withCleanup } from "@gwenjs/core";
 import type { EntityId } from "@gwenjs/core";
 import { getOrCreateCameraManager, getOrCreateViewportManager } from "@gwenjs/renderer-core";
 import { Camera, cameraViewportMap, cameraPathStore } from "@gwenjs/camera-core";
@@ -78,5 +78,30 @@ describe("use3DCamera", () => {
             expect(typeof handle.setRotation).toBe("function");
             expect(typeof handle.setFov).toBe("function");
         });
+    });
+
+    it("destroys camera entity and removes it from cameraViewportMap on cleanup", async () => {
+        const engine = await makeEngine();
+
+        // withCleanup wraps the composable call and returns [result, dispose]
+        // engine.run provides the engine context required by use3DCamera
+        const [, dispose] = engine.run(() =>
+            withCleanup(() => use3DCamera({ viewport: "main" }))
+        );
+
+        // Entity should exist after creation
+        let camId: EntityId | undefined;
+        for (const [id, vp] of cameraViewportMap) {
+            if (vp === "main") { camId = id; break; }
+        }
+        expect(camId).toBeDefined();
+        expect(engine.getComponent(camId!, Camera)).not.toBeNull();
+
+        // Trigger cleanup
+        dispose();
+
+        // Entity should be destroyed and viewport entry removed
+        expect(cameraViewportMap.has(camId!)).toBe(false);
+        expect(engine.getComponent(camId!, Camera)).toBeFalsy();
     });
 });

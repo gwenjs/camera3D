@@ -156,4 +156,17 @@ describe("createCamera3DHandle", () => {
         const shake = engine.getComponent(camId, CameraShake);
         expect(shake?.trauma).toBeCloseTo(1);
     });
+
+    it("followThirdPerson() with lookAt as EntityId adds LookAtTarget with entityId set", async () => {
+        const { engine, camId, handle } = await setup();
+        const targetId = engine.createEntity();
+        engine.addComponent(targetId, Camera, {
+            active: 1, priority: 0, projectionType: 1,
+            x: 5, y: 0, z: 0, rotX: 0, rotY: 0, rotZ: 0,
+            zoom: 1, fov: 1, near: 0.1, far: 1000,
+        });
+        handle.followThirdPerson(targetId, { lookAt: targetId });
+        expect(engine.getComponent(camId, LookAtTarget)?.entityId).toBe(targetId);
+        expect(engine.getComponent(camId, LookAtTarget)?.syncRotation).toBe(0);
+    });
 });
