@@ -16,4 +16,10 @@ export { Camera3DExtensionSystem } from "./camera3d-extension-system";
 export { LookAtTarget, OrbitBehavior } from "./components";
 export { useOrbit, useFirstPerson } from "./behaviors";
 
-export type { Use3DCameraOpts, Camera3DHandle, Box, Camera3dOptions, Camera3dService } from "./types";
+export type {
+  Use3DCameraOpts,
+  Camera3DHandle,
+  Box,
+  Camera3dOptions,
+  Camera3dService,
+} from "./types";
