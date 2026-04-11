@@ -87,8 +87,8 @@ export interface Camera3DHandle {
    * @param opts.lerp    - Smoothing factor. @default 0.08
    */
   followThirdPerson(
-      targetId: EntityId,
-      opts?: { offset?: Vec3; lookAt?: EntityId | Vec3; lerp?: number },
+    targetId: EntityId,
+    opts?: { offset?: Vec3; lookAt?: EntityId | Vec3; lerp?: number },
   ): void;
 
   /**

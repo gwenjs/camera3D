@@ -17,14 +17,14 @@ import { defineComponent, Types } from "@gwenjs/core";
  * - When `syncRotation === 1`: copy the target entity's rotation exactly (first-person mode).
  */
 export const LookAtTarget = defineComponent({
-    name: "LookAtTarget",
-    schema: {
-        entityId:     Types.u64,   // 0n = use fixed position
-        fixedX:       Types.f32,
-        fixedY:       Types.f32,
-        fixedZ:       Types.f32,
-        syncRotation: Types.u32,   // 1 = copy target rotation (first-person)
-    },
+  name: "LookAtTarget",
+  schema: {
+    entityId: Types.u64, // 0n = use fixed position
+    fixedX: Types.f32,
+    fixedY: Types.f32,
+    fixedZ: Types.f32,
+    syncRotation: Types.u32, // 1 = copy target rotation (first-person)
+  },
 });
 
 /**
@@ -34,15 +34,15 @@ export const LookAtTarget = defineComponent({
  * `autoRotate === 1`, then writes the computed position into `Camera.x/y/z`.
  */
 export const OrbitBehavior = defineComponent({
-    name: "OrbitBehavior",
-    schema: {
-        targetX:    Types.f32,
-        targetY:    Types.f32,
-        targetZ:    Types.f32,
-        radius:     Types.f32,
-        speed:      Types.f32,   // radians per second
-        elevation:  Types.f32,   // vertical angle in radians
-        autoRotate: Types.u32,   // 1 = advance angle each frame
-        angle:      Types.f32,   // current horizontal angle, managed by the system
-    },
+  name: "OrbitBehavior",
+  schema: {
+    targetX: Types.f32,
+    targetY: Types.f32,
+    targetZ: Types.f32,
+    radius: Types.f32,
+    speed: Types.f32, // radians per second
+    elevation: Types.f32, // vertical angle in radians
+    autoRotate: Types.u32, // 1 = advance angle each frame
+    angle: Types.f32, // current horizontal angle, managed by the system
+  },
 });
