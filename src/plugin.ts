@@ -46,7 +46,7 @@ export const Camera3DPlugin = definePlugin((_options?: Camera3dOptions) => ({
     const service: Camera3dService = {
       getCamera3dHandle(opts: Use3DCameraOpts = {}): Camera3DHandle | null {
         const viewportId = opts.viewport ?? "main";
-        const viewports = engine.inject("viewportManager") as Map<string, unknown>;
+        const viewports = engine.inject("viewportManager") as unknown as Map<string, unknown>;
 
         if (!viewports.get(viewportId)) {
           const err = new CameraViewportNotFoundError(viewportId);
