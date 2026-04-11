@@ -14,7 +14,6 @@ export { createCamera3DHandle } from "./camera3d-handle";
 export { Camera3DPlugin } from "./plugin";
 export { Camera3DExtensionSystem } from "./camera3d-extension-system";
 export { LookAtTarget, OrbitBehavior } from "./components";
-export { useOrbit, useFirstPerson } from "./behaviors";
 
 export type {
   Use3DCameraOpts,
