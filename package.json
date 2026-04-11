@@ -43,12 +43,12 @@
   },
   "devDependencies": {
     "@types/node": "^25.6.0",
-    "oxfmt": "latest",
-    "oxlint": "latest",
+    "oxfmt": "^0.44.0",
+    "oxlint": "^1.59.0",
     "typescript": "^6.0.2",
     "vite": "^8.0.8",
     "vite-plugin-dts": "^4.5.4",
-    "vitepress": "latest",
+    "vitepress": "^1.6.4",
     "vitest": "^4.1.4"
   }
 }
