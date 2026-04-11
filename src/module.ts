@@ -8,7 +8,6 @@
  */
 
 import { defineGwenModule } from "@gwenjs/kit/module";
-import { definePluginTypes } from "@gwenjs/kit/plugin";
 import type { Camera3dOptions } from "./types";
 
 export default defineGwenModule<Camera3dOptions>({
@@ -25,14 +24,5 @@ export default defineGwenModule<Camera3dOptions>({
     kit.addPlugin(Camera3DPlugin(options));
 
     kit.addAutoImports([{ name: "useCamera3d", from: "@gwenjs/camera3d" }]);
-
-    kit.addTypeTemplate({
-      filename: "camera3d.d.ts",
-      getContents: () =>
-        definePluginTypes({
-          imports: ["import type { Camera3dService } from '@gwenjs/camera3d'"],
-          provides: { "renderer:camera3d": "Camera3dService" },
-        }),
-    });
   },
 });
