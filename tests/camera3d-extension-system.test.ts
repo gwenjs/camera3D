@@ -2,7 +2,7 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { createEngine } from "@gwenjs/core";
 import { getOrCreateCameraManager, getOrCreateViewportManager } from "@gwenjs/renderer-core";
-import { Camera, CameraCorePlugin, cameraViewportMap, cameraPathStore, CameraPath } from "@gwenjs/camera-core";
+import { Camera, cameraViewportMap, cameraPathStore, CameraPath } from "@gwenjs/camera-core";
 import { LookAtTarget, OrbitBehavior } from "../src/components.js";
 import { Camera3DPlugin } from "../src/plugin.js";
 import type { CameraWaypoint } from "@gwenjs/camera-core";
